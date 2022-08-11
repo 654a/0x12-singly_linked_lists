@@ -1,51 +1,48 @@
 #include "lists.h"
 
 /**
-  * add_node - Adds a new node at the beggining of a new list
-  * @head: Address of head
-  * @str: Data to be added in new node
-  * Return: Address of new element
-  */
+*_strlen - find string length
+*@str: string
+*Return: length
+*/
+int _strlen(const char *str)
+{
+int len;
+
+for (len = 0; str[len] != '\0'; len++)
+;
+return (len);
+}
+
+/**
+*add_node - add node to beginning of linked list
+*@head: linked list
+*@str: data for new node
+*Return: address of new element, or NULL if failed
+*/
 
 list_t *add_node(list_t **head, const char *str)
-
 {
+list_t *new_node; /* create new node */
 
-	list_t *ptr = malloc(sizeof(list_t));
+if (str == NULL) /* validate input */
+return (NULL);
+if (strdup(str) == NULL) /*check if strdup malloc errored */
+return (NULL);
 
-	int len = 0;
+new_node = malloc(sizeof(list_t)); /* malloc for new node */
+if (new_node == NULL)
+return (NULL);
 
+new_node->str = strdup(str); /* set node values */
+new_node->len = _strlen(str);
 
+if (head == NULL) /* set what new node points to first */
+new_node->next = NULL;
+else
+new_node->next = *head;
 
-	if (ptr == NULL)
+*head = new_node; /* set head to point to new node */
 
-		return (NULL);
-
-
-
-	while (str[len])
-
-		len++;
-
-
-
-
-
-
-
-	ptr->str = strdup(str);
-
-	ptr->len = len;
-
-	ptr->next = NULL;
-
-
-
-	ptr->next = *head;
-
-	*head = ptr;
-
-
-
-	return (*head);
+return (new_node);
 }
